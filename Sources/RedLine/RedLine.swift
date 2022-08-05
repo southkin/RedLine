@@ -23,46 +23,25 @@ class RedLine  {
         guard let thisAttr = thisAttr else {
             return nil
         }
-
         let layout = NSLayoutConstraint(item: this, attribute: thisAttr, relatedBy: relatedBy, toItem: other, attribute: otherAttr ?? thisAttr, multiplier: multiplier ?? 1, constant: constant)
         layout.isActive = true
         return layout
     }
-}
-extension RedLine {
-    var centerX:RedLine {
-        self.thisAttr = .centerX
-        return self
+    
+    @discardableResult
+    func equal(_ to:RedLine) -> NSLayoutConstraint? {
+        return self == to
     }
-    var centerY:RedLine {
-        self.thisAttr = .centerY
-        return self
+    @discardableResult
+    func greaterThanOrEqual(_ to:RedLine) -> NSLayoutConstraint? {
+        return self >= to
     }
-    var leading:RedLine {
-        self.thisAttr = .leading
-        return self
-    }
-    var trailing:RedLine {
-        self.thisAttr = .trailing
-        return self
-    }
-    var top:RedLine {
-        self.thisAttr = .top
-        return self
-    }
-    var bottom:RedLine {
-        self.thisAttr = .bottom
-        return self
-    }
-    var width:RedLine {
-        self.thisAttr = .width
-        return self
-    }
-    var height:RedLine {
-        self.thisAttr = .height
-        return self
+    @discardableResult
+    func lessThenOrEqual(_ to:RedLine) -> NSLayoutConstraint? {
+        return self <= to
     }
 }
+
 extension RedLine {
     @discardableResult
     static func ==(lhs:RedLine, rhs:RedLine) -> NSLayoutConstraint? {
@@ -150,5 +129,80 @@ extension RedLine {
 extension UIView {
     var rl:RedLine {
         return .init(this: self)
+    }
+}
+
+extension RedLine {
+    var centerX:RedLine {
+        self.thisAttr = .centerX
+        return self
+    }
+    var centerY:RedLine {
+        self.thisAttr = .centerY
+        return self
+    }
+    var leading:RedLine {
+        self.thisAttr = .leading
+        return self
+    }
+    var trailing:RedLine {
+        self.thisAttr = .trailing
+        return self
+    }
+    var top:RedLine {
+        self.thisAttr = .top
+        return self
+    }
+    var bottom:RedLine {
+        self.thisAttr = .bottom
+        return self
+    }
+    var width:RedLine {
+        self.thisAttr = .width
+        return self
+    }
+    var height:RedLine {
+        self.thisAttr = .height
+        return self
+    }
+    var left:RedLine {
+        self.thisAttr = .left
+        return self
+    }
+    var right:RedLine {
+        self.thisAttr = .right
+        return self
+    }
+    var leftMargin:RedLine {
+        self.thisAttr = .leftMargin
+        return self
+    }
+    var rightMargin:RedLine {
+        self.thisAttr = .rightMargin
+        return self
+    }
+    var topMargin:RedLine {
+        self.thisAttr = .topMargin
+        return self
+    }
+    var bottomMargin:RedLine {
+        self.thisAttr = .bottomMargin
+        return self
+    }
+    var centerXWithinMargins:RedLine {
+        self.thisAttr = .centerXWithinMargins
+        return self
+    }
+    var centerYWithinMargins:RedLine {
+        self.thisAttr = .centerYWithinMargins
+        return self
+    }
+    var firstBaseline:RedLine {
+        self.thisAttr = .firstBaseline
+        return self
+    }
+    var lastBaseline:RedLine {
+        self.thisAttr = .lastBaseline
+        return self
     }
 }
