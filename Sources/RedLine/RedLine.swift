@@ -235,97 +235,97 @@ extension RedLine {
 }
 
 extension RedLine {
-    var centerX:RedLine {
+    public var centerX:RedLine {
         self.thisAttrs.insert(.centerX)
         return self
     }
-    var centerY:RedLine {
+    public var centerY:RedLine {
         self.thisAttrs.insert(.centerY)
         return self
     }
-    var leading:RedLine {
+    public var leading:RedLine {
         self.thisAttrs.insert(.leading)
         return self
     }
-    var trailing:RedLine {
+    public var trailing:RedLine {
         self.thisAttrs.insert(.trailing)
         return self
     }
-    var top:RedLine {
+    public var top:RedLine {
         self.thisAttrs.insert(.top)
         return self
     }
-    var bottom:RedLine {
+    public var bottom:RedLine {
         self.thisAttrs.insert(.bottom)
         return self
     }
-    var width:RedLine {
+    public var width:RedLine {
         self.thisAttrs.insert(.width)
         return self
     }
-    var height:RedLine {
+    public var height:RedLine {
         self.thisAttrs.insert(.height)
         return self
     }
-    var left:RedLine {
+    public var left:RedLine {
         self.thisAttrs.insert(.left)
         return self
     }
-    var right:RedLine {
+    public var right:RedLine {
         self.thisAttrs.insert(.right)
         return self
     }
-    var leftMargin:RedLine {
+    public var leftMargin:RedLine {
         self.thisAttrs.insert(.leftMargin)
         return self
     }
-    var rightMargin:RedLine {
+    public var rightMargin:RedLine {
         self.thisAttrs.insert(.rightMargin)
         return self
     }
-    var topMargin:RedLine {
+    public var topMargin:RedLine {
         self.thisAttrs.insert(.topMargin)
         return self
     }
-    var bottomMargin:RedLine {
+    public var bottomMargin:RedLine {
         self.thisAttrs.insert(.bottomMargin)
         return self
     }
-    var centerXWithinMargins:RedLine {
+    public var centerXWithinMargins:RedLine {
         self.thisAttrs.insert(.centerXWithinMargins)
         return self
     }
-    var centerYWithinMargins:RedLine {
+    public var centerYWithinMargins:RedLine {
         self.thisAttrs.insert(.centerYWithinMargins)
         return self
     }
-    var firstBaseline:RedLine {
+    public var firstBaseline:RedLine {
         self.thisAttrs.insert(.firstBaseline)
         return self
     }
-    var lastBaseline:RedLine {
+    public var lastBaseline:RedLine {
         self.thisAttrs.insert(.lastBaseline)
         return self
     }
-    var edge:RedLine {
+    public var edge:RedLine {
         return self.top.leading.trailing.bottom
     }
 }
 extension NSLayoutConstraint {
-    static func ^ (lhs:NSLayoutConstraint, rhs:Float) {
+    public static func ^ (lhs:NSLayoutConstraint, rhs:Float) {
         lhs.priority = .init(rawValue: rhs)
     }
-    static func ^ (lhs:NSLayoutConstraint, rhs:Int) {
+    public static func ^ (lhs:NSLayoutConstraint, rhs:Int) {
         lhs ^ Float(rhs)
     }
 }
 extension Array where Element == NSLayoutConstraint {
-    static func ^ (lhs:[NSLayoutConstraint], rhs:Float) {
+    public static func ^ (lhs:[NSLayoutConstraint], rhs:Float) {
         lhs.forEach {
             $0.priority = .init(rawValue: rhs)
         }
     }
-    static func ^ (lhs:[NSLayoutConstraint], rhs:Int) {
+    public static func ^ (lhs:[NSLayoutConstraint], rhs:Int) {
         lhs ^ Float(rhs)
     }
 }
