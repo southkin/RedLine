@@ -36,7 +36,7 @@ extension UILayoutGuide {
         return .init(this: self)
     }
 }
-class RedLine  {
+public class RedLine  {
     fileprivate var this:Any
     fileprivate var thisAttrs:Set<NSLayoutConstraint.Attribute> = .init()
     fileprivate var other:Any?
@@ -70,16 +70,16 @@ class RedLine  {
         return list
     }
     
-    func `do`(activate:Bool = true, closer:(RedLine)->()) {
+    public func `do`(activate:Bool = true, closer:(RedLine)->()) {
         closer(self)
     }
-    func doWithAnimate(duration:Double,parentView:UIView, _ closer:@escaping(RedLine) -> (),completion:((Bool)->Void)?) {
+    public func doWithAnimate(duration:Double,parentView:UIView, _ closer:@escaping(RedLine) -> (),completion:((Bool)->Void)?) {
         UIView.animate(withDuration: duration, animations: {
             closer(self)
             parentView.layoutIfNeeded()
         }, completion: completion)
     }
-    func clear() {
+    public func clear() {
         guard let this = self.this as? UIView else {
             return
         }
@@ -89,7 +89,7 @@ class RedLine  {
     }
     
     @discardableResult
-    static func ==(lhs:RedLine, rhs:RedLine) -> [NSLayoutConstraint] {
+    public static func ==(lhs:RedLine, rhs:RedLine) -> [NSLayoutConstraint] {
         lhs.other = rhs.this
         lhs.otherAttr = rhs.thisAttrs
         lhs.relatedBy = .equal
@@ -99,14 +99,14 @@ class RedLine  {
         return lhs.active()
     }
     @discardableResult
-    static func ==(lhs:RedLine, rhs:CGFloat) -> [NSLayoutConstraint] {
+    public static func ==(lhs:RedLine, rhs:CGFloat) -> [NSLayoutConstraint] {
         lhs.relatedBy = .equal
         lhs.constant = rhs
         lhs.other = nil
         return lhs.active()
     }
     @discardableResult
-    static func >=(lhs:RedLine, rhs:RedLine) -> [NSLayoutConstraint] {
+    public static func >=(lhs:RedLine, rhs:RedLine) -> [NSLayoutConstraint] {
         lhs.other = rhs.this
         lhs.otherAttr = rhs.thisAttrs
         lhs.relatedBy = .greaterThanOrEqual
@@ -116,14 +116,14 @@ class RedLine  {
         return lhs.active()
     }
     @discardableResult
-    static func >=(lhs:RedLine, rhs:CGFloat) -> [NSLayoutConstraint] {
+    public static func >=(lhs:RedLine, rhs:CGFloat) -> [NSLayoutConstraint] {
         lhs.relatedBy = .greaterThanOrEqual
         lhs.constant = rhs
         lhs.other = nil
         return lhs.active()
     }
     @discardableResult
-    static func <=(lhs:RedLine, rhs:RedLine) -> [NSLayoutConstraint] {
+    public static func <=(lhs:RedLine, rhs:RedLine) -> [NSLayoutConstraint] {
         lhs.other = rhs.this
         lhs.otherAttr = rhs.thisAttrs
         lhs.relatedBy = .lessThanOrEqual
@@ -133,29 +133,29 @@ class RedLine  {
         return lhs.active()
     }
     @discardableResult
-    static func <=(lhs:RedLine, rhs:CGFloat) -> [NSLayoutConstraint] {
+    public static func <=(lhs:RedLine, rhs:CGFloat) -> [NSLayoutConstraint] {
         lhs.relatedBy = .lessThanOrEqual
         lhs.constant = rhs
         lhs.other = nil
         return lhs.active()
     }
-    static func * (lhs:CGFloat,rhs:RedLine) -> RedLine {
+    public static func * (lhs:CGFloat,rhs:RedLine) -> RedLine {
         rhs.multiplier = lhs
         return rhs
     }
-    static func * (lhs:RedLine, rhs:CGFloat) -> RedLine {
+    public static func * (lhs:RedLine, rhs:CGFloat) -> RedLine {
         lhs.multiplier = rhs
         return lhs
     }
-    static func + (lhs:RedLine, rhs:CGFloat) -> RedLine {
+    public static func + (lhs:RedLine, rhs:CGFloat) -> RedLine {
         lhs.constant = rhs
         return lhs
     }
-    static func + (lhs:CGFloat, rhs:RedLine) -> RedLine {
+    public static func + (lhs:CGFloat, rhs:RedLine) -> RedLine {
         rhs.constant = lhs
         return rhs
     }
-    static func ^ (lhs:RedLine, rhs:Float) -> RedLine {
+    public static func ^ (lhs:RedLine, rhs:Float) -> RedLine {
         lhs.priority = rhs
         return lhs
     }
@@ -163,15 +163,15 @@ class RedLine  {
 
 extension RedLine {
     @discardableResult
-    func equal(_ to:RedLine) -> [NSLayoutConstraint] {
+    public func equal(_ to:RedLine) -> [NSLayoutConstraint] {
         return self == to
     }
     @discardableResult
-    func greaterThanOrEqual(_ to:RedLine) -> [NSLayoutConstraint] {
+    public func greaterThanOrEqual(_ to:RedLine) -> [NSLayoutConstraint] {
         return self >= to
     }
     @discardableResult
-    func lessThenOrEqual(_ to:RedLine) -> [NSLayoutConstraint] {
+    public func lessThenOrEqual(_ to:RedLine) -> [NSLayoutConstraint] {
         return self <= to
     }
 }
@@ -179,57 +179,57 @@ extension RedLine {
 extension RedLine {
     //MARK: - typecasting
     @discardableResult
-    static func ==(lhs:RedLine, rhs:RedlineAnchor) -> [NSLayoutConstraint] {
+    public static func ==(lhs:RedLine, rhs:RedlineAnchor) -> [NSLayoutConstraint] {
         let rLine:RedLine = .init(this: rhs)
         return (lhs == rLine)
     }
     @discardableResult
-    static func ==(lhs:RedLine, rhs:Double) -> [NSLayoutConstraint] {
+    public static func ==(lhs:RedLine, rhs:Double) -> [NSLayoutConstraint] {
         return (lhs == CGFloat(rhs))
     }
     @discardableResult
-    static func ==(lhs:RedLine, rhs:Int) -> [NSLayoutConstraint] {
+    public static func ==(lhs:RedLine, rhs:Int) -> [NSLayoutConstraint] {
         return (lhs == CGFloat(rhs))
     }
     @discardableResult
-    static func >=(lhs:RedLine, rhs:RedlineAnchor) -> [NSLayoutConstraint] {
+    public static func >=(lhs:RedLine, rhs:RedlineAnchor) -> [NSLayoutConstraint] {
         let rLine:RedLine = .init(this: rhs)
         return (lhs >= rLine)
     }
     @discardableResult
-    static func >=(lhs:RedLine, rhs:Int) -> [NSLayoutConstraint] {
+    public static func >=(lhs:RedLine, rhs:Int) -> [NSLayoutConstraint] {
         return (lhs >= CGFloat(rhs))
     }
     @discardableResult
-    static func >=(lhs:RedLine, rhs:Double) -> [NSLayoutConstraint] {
+    public static func >=(lhs:RedLine, rhs:Double) -> [NSLayoutConstraint] {
         return (lhs >= CGFloat(rhs))
     }
     @discardableResult
-    static func <=(lhs:RedLine, rhs:RedlineAnchor) -> [NSLayoutConstraint] {
+    public static func <=(lhs:RedLine, rhs:RedlineAnchor) -> [NSLayoutConstraint] {
         let rLine:RedLine = .init(this: rhs)
         return (lhs <= rLine)
     }
     @discardableResult
-    static func <=(lhs:RedLine, rhs:Int) -> [NSLayoutConstraint] {
+    public static func <=(lhs:RedLine, rhs:Int) -> [NSLayoutConstraint] {
         return (lhs <= CGFloat(rhs))
     }
     @discardableResult
-    static func <=(lhs:RedLine, rhs:Double) -> [NSLayoutConstraint] {
+    public static func <=(lhs:RedLine, rhs:Double) -> [NSLayoutConstraint] {
         return (lhs <= CGFloat(rhs))
     }
     @discardableResult
-    func equal(_ to:RedlineAnchor) -> [NSLayoutConstraint] {
+    public func equal(_ to:RedlineAnchor) -> [NSLayoutConstraint] {
         return self == to
     }
     @discardableResult
-    func greaterThanOrEqual(_ to:RedlineAnchor) -> [NSLayoutConstraint] {
+    public func greaterThanOrEqual(_ to:RedlineAnchor) -> [NSLayoutConstraint] {
         return self >= to
     }
     @discardableResult
-    func lessThenOrEqual(_ to:RedlineAnchor) -> [NSLayoutConstraint] {
+    public func lessThenOrEqual(_ to:RedlineAnchor) -> [NSLayoutConstraint] {
         return self <= to
     }
-    static func ^ (lhs:RedLine, rhs:Int) -> RedLine {
+    public static func ^ (lhs:RedLine, rhs:Int) -> RedLine {
         return lhs ^ Float(rhs)
     }
 }
@@ -329,7 +329,7 @@ extension Array where Element == NSLayoutConstraint {
         lhs ^ Float(rhs)
     }
 }
-protocol RedlineAnchor {
+public protocol RedlineAnchor {
     
 }
 extension UIView : RedlineAnchor{}
