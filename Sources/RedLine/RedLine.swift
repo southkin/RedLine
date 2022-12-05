@@ -70,7 +70,7 @@ class RedLine  {
         return list
     }
     
-    func `do`(_ closer:(RedLine)->()) {
+    func `do`(activate:Bool = true, closer:(RedLine)->()) {
         closer(self)
     }
     func doWithAnimate(duration:Double,parentView:UIView, _ closer:@escaping(RedLine) -> (),completion:((Bool)->Void)?) {
@@ -333,4 +333,4 @@ protocol RedlineAnchor {
     
 }
 extension UIView : RedlineAnchor{}
-extension UILayoutGuide : RedlineAnchor{}
+extension CALayer : RedlineAnchor{}
