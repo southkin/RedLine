@@ -174,6 +174,10 @@ extension RedLine {
     public func lessThenOrEqual(_ to:RedLine) -> [NSLayoutConstraint] {
         return self <= to
     }
+    @discardableResult
+    public func setPriority(_ value:Float) -> RedLine {
+        return self ^ value
+    }
 }
 
 extension RedLine {
