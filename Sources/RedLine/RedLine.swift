@@ -14,10 +14,10 @@ precedencegroup PriorityPrecedence {
 //infix operator ^ : PriorityPrecedence
 infix operator ^
 extension UIView {
-    var rl:RedLine {
+    public var rl:RedLine {
         return .init(this: self)
     }
-    var allConstraints:[NSLayoutConstraint] {
+    public var allConstraints:[NSLayoutConstraint] {
         var views = [self]
 
         var view = self
@@ -32,7 +32,7 @@ extension UIView {
     }
 }
 extension UILayoutGuide {
-    var rl:RedLine {
+    public var rl:RedLine {
         return .init(this: self)
     }
 }
