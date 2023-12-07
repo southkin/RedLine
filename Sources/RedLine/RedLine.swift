@@ -11,8 +11,9 @@ precedencegroup PriorityPrecedence {
     associativity: left
     lowerThan: AdditionPrecedence
 }
-//infix operator ^ : PriorityPrecedence
-infix operator ^
+
+infix operator ^ : PriorityPrecedence
+public typealias RedlineBlock = (RedLine) -> ()
 extension UIView {
     public var rl:RedLine {
         return .init(this: self)
@@ -29,6 +30,34 @@ extension UIView {
             return constraint.firstItem as? UIView == self ||
                 constraint.secondItem as? UIView == self
         }
+    }
+    public func addSubview(_ view: UIView, redlineBlock:RedlineBlock) {
+        addSubview(view)
+        view.rl.do(redlineBlock: redlineBlock)
+    }
+    public func insertSubview(
+        _ view: UIView,
+        at index: Int,
+        redlineBlock:RedlineBlock
+    ) {
+        insertSubview(view, at: index)
+        view.rl.do(redlineBlock: redlineBlock)
+    }
+    public func insertSubview(
+        _ view: UIView,
+        aboveSubview siblingSubview: UIView,
+        redlineBlock:RedlineBlock
+    ) {
+        view.insertSubview(view, aboveSubview: siblingSubview)
+        view.rl.do(redlineBlock: redlineBlock)
+    }
+    public func insertSubview(
+        _ view: UIView,
+        belowSubview siblingSubview: UIView,
+        redlineBlock:RedlineBlock
+    ) {
+        view.insertSubview(view, belowSubview: siblingSubview)
+        view.rl.do(redlineBlock: redlineBlock)
     }
 }
 extension UILayoutGuide {
@@ -63,15 +92,17 @@ public class RedLine  {
         thisAttrs.forEach { thisAttr in
             let layout = NSLayoutConstraint(item: this, attribute: thisAttr, relatedBy: relatedBy, toItem: other, attribute: otherAttr.first ?? thisAttr, multiplier: multiplier ?? 1, constant: constant)
             layout.priority = .init(rawValue: priority ?? 1000)
-            layout.isActive = true
+            DispatchQueue.main.async {
+                layout.isActive = true
+            }
             list.append(layout)
         }
         
         return list
     }
     
-    public func `do`(activate:Bool = true, closer:(RedLine)->()) {
-        closer(self)
+    public func `do`(redlineBlock:RedlineBlock) {
+        redlineBlock(self)
     }
     public func doWithAnimate(duration:Double,parentView:UIView, _ closer:@escaping(RedLine) -> (),completion:((Bool)->Void)?) {
         UIView.animate(withDuration: duration, animations: {
@@ -153,6 +184,14 @@ public class RedLine  {
     }
     public static func + (lhs:CGFloat, rhs:RedLine) -> RedLine {
         rhs.constant = lhs
+        return rhs
+    }
+    public static func - (lhs:RedLine, rhs:CGFloat) -> RedLine {
+        lhs.constant = -rhs
+        return lhs
+    }
+    public static func - (lhs:CGFloat, rhs:RedLine) -> RedLine {
+        rhs.constant = -lhs
         return rhs
     }
     public static func ^ (lhs:RedLine, rhs:Float) -> RedLine {
